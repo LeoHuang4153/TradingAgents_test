@@ -63,6 +63,12 @@ class TradingAgentsGraph:
         self.debug = debug
         self.config = config or DEFAULT_CONFIG
 
+        # Normalize analyst aliases (e.g., legacy "social" -> "sentiment") before setup
+        selected_analysts = [
+            "sentiment" if analyst == "social" else analyst
+            for analyst in selected_analysts
+        ]
+
         # Update the interface's config
         set_config(self.config)
 
@@ -133,6 +139,13 @@ class TradingAgentsGraph:
                 ]
             ),
             "sentiment": ToolNode(
+                [
+                    # News tools for sentiment analysis
+                    get_news,
+                ]
+            ),
+            # Backward compatible alias for legacy selections
+            "social": ToolNode(
                 [
                     # News tools for sentiment analysis
                     get_news,
