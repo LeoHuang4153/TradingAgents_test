@@ -16,6 +16,7 @@ from .alpha_vantage import (
     get_news as get_alpha_vantage_news
 )
 from .alpha_vantage_common import AlphaVantageRateLimitError
+from .macro_indicators import get_macro_ind
 
 # Configuration and routing logic
 from .config import get_config
@@ -26,6 +27,12 @@ TOOLS_CATEGORIES = {
         "description": "OHLCV stock price data",
         "tools": [
             "get_stock_data"
+        ]
+    },
+    "macro_indicators": {
+        "description": "Macroeconomic indicator data",
+        "tools": [
+            "get_macro_ind"
         ]
     },
     "technical_indicators": {
@@ -68,6 +75,10 @@ VENDOR_METHODS = {
         "alpha_vantage": get_alpha_vantage_stock,
         "yfinance": get_YFin_data_online,
         "local": get_YFin_data,
+    },
+    # macro_indicators
+    "get_macro_ind": {
+        "local": get_macro_ind
     },
     # technical_indicators
     "get_indicators": {

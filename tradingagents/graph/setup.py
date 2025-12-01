@@ -72,7 +72,7 @@ class GraphSetup:
             tool_nodes["social"] = self.tool_nodes["social"]
 
         if "news" in selected_analysts:
-            analyst_nodes["news"] = create_news_analyst(
+            analyst_nodes["news"] = create_macro_eco_analyst(
                 self.quick_thinking_llm
             )
             delete_nodes["news"] = create_msg_delete()

@@ -882,7 +882,7 @@ def run_analysis():
                     )
                     message_buffer.update_agent_status("Market Analyst", "completed")
                     # Set next analyst to in_progress
-                    if "social" in selections["analysts"]:
+                    if AnalystType.SOCIAL in selections["analysts"]:
                         message_buffer.update_agent_status(
                             "Social Analyst", "in_progress"
                         )
@@ -893,7 +893,7 @@ def run_analysis():
                     )
                     message_buffer.update_agent_status("Social Analyst", "completed")
                     # Set next analyst to in_progress
-                    if "news" in selections["analysts"]:
+                    if AnalystType.NEWS in selections["analysts"]:
                         message_buffer.update_agent_status(
                             "News Analyst", "in_progress"
                         )
@@ -904,7 +904,7 @@ def run_analysis():
                     )
                     message_buffer.update_agent_status("News Analyst", "completed")
                     # Set next analyst to in_progress
-                    if "fundamentals" in selections["analysts"]:
+                    if AnalystType.FUNDAMENTALS in selections["analysts"]:
                         message_buffer.update_agent_status(
                             "Fundamentals Analyst", "in_progress"
                         )
