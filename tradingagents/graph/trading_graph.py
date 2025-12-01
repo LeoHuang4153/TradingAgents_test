@@ -49,7 +49,7 @@ class TradingAgentsGraph:
 
     def __init__(
         self,
-        selected_analysts=["market", "social", "news", "fundamentals"],
+        selected_analysts=["market", "sentiment", "news", "fundamentals"],
         debug=False,
         config: Dict[str, Any] = None,
     ):
@@ -132,9 +132,9 @@ class TradingAgentsGraph:
                     get_indicators,
                 ]
             ),
-            "social": ToolNode(
+            "sentiment": ToolNode(
                 [
-                    # News tools for social media analysis
+                    # News tools for sentiment analysis
                     get_news,
                 ]
             ),
