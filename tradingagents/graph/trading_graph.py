@@ -33,7 +33,8 @@ from tradingagents.agents.utils.agent_utils import (
     get_news,
     get_insider_sentiment,
     get_insider_transactions,
-    get_global_news
+    get_global_news,
+    get_macro_ind,
 )
 
 from .conditional_logic import ConditionalLogic
@@ -48,7 +49,7 @@ class TradingAgentsGraph:
 
     def __init__(
         self,
-        selected_analysts=["market", "social", "news", "fundamentals"],
+        selected_analysts=["market", "sentiment", "news", "fundamentals"],
         debug=False,
         config: Dict[str, Any] = None,
     ):
@@ -61,6 +62,12 @@ class TradingAgentsGraph:
         """
         self.debug = debug
         self.config = config or DEFAULT_CONFIG
+
+        # Normalize analyst aliases (e.g., legacy "social" -> "sentiment") before setup
+        selected_analysts = [
+            "sentiment" if analyst == "social" else analyst
+            for analyst in selected_analysts
+        ]
 
         # Update the interface's config
         set_config(self.config)
@@ -131,17 +138,24 @@ class TradingAgentsGraph:
                     get_indicators,
                 ]
             ),
+            "sentiment": ToolNode(
+                [
+                    # News tools for sentiment analysis
+                    get_news,
+                ]
+            ),
+            # Backward compatible alias for legacy selections
             "social": ToolNode(
                 [
-                    # News tools for social media analysis
+                    # News tools for sentiment analysis
                     get_news,
                 ]
             ),
             "news": ToolNode(
                 [
-                    # News and insider information
-                    get_news,
+                    # Macro news and indicators
                     get_global_news,
+                    get_macro_ind,
                     get_insider_sentiment,
                     get_insider_transactions,
                 ]

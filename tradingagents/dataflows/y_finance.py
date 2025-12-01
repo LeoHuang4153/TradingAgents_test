@@ -72,6 +72,11 @@ def get_stock_stats_indicators_window(
             "Usage: Capture quick shifts in momentum and potential entry points. "
             "Tips: Prone to noise in choppy markets; use alongside longer averages for filtering false signals."
         ),
+        "tema": (
+            "TEMA: Triple exponential moving average with reduced lag. "
+            "Usage: Track faster trend shifts while smoothing noise. "
+            "Tips: Pair with slower SMAs to avoid overtrading on minor fluctuations."
+        ),
         # MACD Related
         "macd": (
             "MACD: Computes momentum via differences of EMAs. "
@@ -93,6 +98,41 @@ def get_stock_stats_indicators_window(
             "RSI: Measures momentum to flag overbought/oversold conditions. "
             "Usage: Apply 70/30 thresholds and watch for divergence to signal reversals. "
             "Tips: In strong trends, RSI may remain extreme; always cross-check with trend analysis."
+        ),
+        "stochrsi": (
+            "StochRSI: Stochastic of RSI for faster overbought/oversold signals. "
+            "Usage: Focus on 0.8/0.2 extremes and crossovers. "
+            "Tips: Highly sensitive; combine with trend filters to reduce whipsaws."
+        ),
+        "roc": (
+            "ROC: Rate of change measuring percentage price shifts. "
+            "Usage: Spot acceleration or deceleration in momentum. "
+            "Tips: Validate spikes with volume or support/resistance context."
+        ),
+        "cci": (
+            "CCI: Commodity Channel Index highlighting deviations from typical price. "
+            "Usage: Watch +/-100 levels and divergence for reversal cues. "
+            "Tips: Performs well in ranges; pair with trend tools in strong moves."
+        ),
+        "rsv": (
+            "RSV: Raw stochastic value showing close position in recent range. "
+            "Usage: Use as a precursor to KDJ signals. "
+            "Tips: Confirm with kdjk/kdjd to avoid reacting to noise."
+        ),
+        "kdjk": (
+            "KDJ K Line: Fast stochastic component. "
+            "Usage: Monitor crossings with D/J for entries. "
+            "Tips: Sensitive to volatility; validate with broader trend."
+        ),
+        "kdjd": (
+            "KDJ D Line: Smoothed confirmation line. "
+            "Usage: Use as filter; K over D can flag momentum shifts. "
+            "Tips: Avoid overreacting in sideways markets."
+        ),
+        "kdjj": (
+            "KDJ J Line: Amplifies divergence between K and D. "
+            "Usage: Identify overextensions and potential snapbacks. "
+            "Tips: J can be volatile; treat extremes cautiously."
         ),
         # Volatility Indicators
         "boll": (

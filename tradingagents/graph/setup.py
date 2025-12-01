@@ -38,19 +38,25 @@ class GraphSetup:
         self.conditional_logic = conditional_logic
 
     def setup_graph(
-        self, selected_analysts=["market", "social", "news", "fundamentals"]
+        self, selected_analysts=["market", "sentiment", "news", "fundamentals"]
     ):
         """Set up and compile the agent workflow graph.
 
         Args:
             selected_analysts (list): List of analyst types to include. Options are:
                 - "market": Market analyst
-                - "social": Social media analyst
+                - "sentiment": Sentiment analyst
                 - "news": News analyst
                 - "fundamentals": Fundamentals analyst
         """
         if len(selected_analysts) == 0:
             raise ValueError("Trading Agents Graph Setup Error: no analysts selected!")
+
+        # Normalize analyst names for backward compatibility (e.g., "social" -> "sentiment")
+        selected_analysts = [
+            "sentiment" if analyst == "social" else analyst
+            for analyst in selected_analysts
+        ]
 
         # Create analyst nodes
         analyst_nodes = {}
@@ -64,15 +70,15 @@ class GraphSetup:
             delete_nodes["market"] = create_msg_delete()
             tool_nodes["market"] = self.tool_nodes["market"]
 
-        if "social" in selected_analysts:
-            analyst_nodes["social"] = create_social_media_analyst(
+        if "sentiment" in selected_analysts:
+            analyst_nodes["sentiment"] = create_sentiment_analyst(
                 self.quick_thinking_llm
             )
-            delete_nodes["social"] = create_msg_delete()
-            tool_nodes["social"] = self.tool_nodes["social"]
+            delete_nodes["sentiment"] = create_msg_delete()
+            tool_nodes["sentiment"] = self.tool_nodes["sentiment"]
 
         if "news" in selected_analysts:
-            analyst_nodes["news"] = create_news_analyst(
+            analyst_nodes["news"] = create_macro_eco_analyst(
                 self.quick_thinking_llm
             )
             delete_nodes["news"] = create_msg_delete()
