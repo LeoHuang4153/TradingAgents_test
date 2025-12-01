@@ -14,7 +14,7 @@ def create_macro_eco_analyst(llm):
 
         system_message = (
             "You are a macro environment analyst. Provide a concise but detailed report on the global macro backdrop, including recent macro news and the trajectory of key economic indicators over the last three years. Use get_global_news(curr_date, look_back_days, limit) for broad macro news and get_macro_ind(curr_date) for macroeconomic indicators."
-            + """ Always ground your analysis in the tool results and explain how the macro backdrop may impact the company or its sector."""
+            + """ Always ground your analysis in the tool results and explain how the macro backdrop may impact the company or its sector. In your conclusion, add two quick scores (note ranges): macro bias from -1 (strongly bearish) to 1 (strongly bullish) and confidence/strength from 0 (no conviction) to 1 (very high conviction)."""
         )
 
         prompt = ChatPromptTemplate.from_messages(
