@@ -52,6 +52,12 @@ class GraphSetup:
         if len(selected_analysts) == 0:
             raise ValueError("Trading Agents Graph Setup Error: no analysts selected!")
 
+        # Normalize analyst names for backward compatibility (e.g., "social" -> "sentiment")
+        selected_analysts = [
+            "sentiment" if analyst == "social" else analyst
+            for analyst in selected_analysts
+        ]
+
         # Create analyst nodes
         analyst_nodes = {}
         delete_nodes = {}

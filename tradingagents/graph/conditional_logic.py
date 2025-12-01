@@ -27,6 +27,10 @@ class ConditionalLogic:
             return "tools_sentiment"
         return "Msg Clear Sentiment"
 
+    # Backward compatible alias
+    def should_continue_social(self, state: AgentState):
+        return self.should_continue_sentiment(state)
+
     def should_continue_news(self, state: AgentState):
         """Determine if news analysis should continue."""
         messages = state["messages"]
