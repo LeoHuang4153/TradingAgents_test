@@ -1,6 +1,7 @@
+from datetime import datetime, timedelta
+
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-import time
-import json
+
 from tradingagents.agents.utils.agent_utils import get_news
 
 
@@ -8,15 +9,19 @@ def create_sentiment_analyst(llm):
     def sentiment_analyst_node(state):
         current_date = state["trade_date"]
         ticker = state["company_of_interest"]
-        company_name = state["company_of_interest"]
+        start_date = (
+            datetime.fromisoformat(current_date) - timedelta(days=7)
+        ).date()
 
         tools = [
             get_news,
         ]
 
         system_message = (
-            "You are a sentiment analyst focused on gauging public mood and narrative momentum around a specific company over the past week. Analyze daily sentiment signals and recent company-specific news to extract actionable insights. Use the get_news(query, start_date, end_date) tool to gather social/news discussions and emphasize sentiment drivers, momentum shifts, and investor perception. Avoid generic statements; deliver specific observations that can help traders anticipate sentiment-driven moves."
-            + """ Append a concise Markdown table summarizing key sentiment drivers and their potential impact.""",
+            "You are a sentiment analyst focused on gauging public mood and narrative momentum around a specific company over the past week."
+            " Always start by calling get_news with ticker={ticker}, start_date={start_date}, end_date={current_date} to fetch the latest discussions before forming conclusions."
+            " Emphasize sentiment drivers, momentum shifts, and investor perception. Avoid generic statements; deliver specific observations that can help traders anticipate sentiment-driven moves."
+            " Append a concise Markdown table summarizing key sentiment drivers and their potential impact."
         )
 
         prompt = ChatPromptTemplate.from_messages(
@@ -40,6 +45,7 @@ def create_sentiment_analyst(llm):
         prompt = prompt.partial(tool_names=", ".join([tool.name for tool in tools]))
         prompt = prompt.partial(current_date=current_date)
         prompt = prompt.partial(ticker=ticker)
+        prompt = prompt.partial(start_date=str(start_date))
 
         chain = prompt | llm.bind_tools(tools)
 
