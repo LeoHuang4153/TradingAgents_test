@@ -33,7 +33,8 @@ from tradingagents.agents.utils.agent_utils import (
     get_news,
     get_insider_sentiment,
     get_insider_transactions,
-    get_global_news
+    get_global_news,
+    get_macro_ind,
 )
 
 from .conditional_logic import ConditionalLogic
@@ -139,9 +140,9 @@ class TradingAgentsGraph:
             ),
             "news": ToolNode(
                 [
-                    # News and insider information
-                    get_news,
+                    # Macro news and indicators
                     get_global_news,
+                    get_macro_ind,
                     get_insider_sentiment,
                     get_insider_transactions,
                 ]
