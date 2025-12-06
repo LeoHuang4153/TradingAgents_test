@@ -181,11 +181,15 @@ def create_layout():
         Layout(name="main"),
         Layout(name="footer", size=3),
     )
+    # Give the upper section enough vertical space so the progress table can render
+    # all analyst rows (not just the first one) even on smaller terminals.
     layout["main"].split_column(
-        Layout(name="upper", ratio=3), Layout(name="analysis", ratio=5)
+        Layout(name="upper", ratio=4, minimum_size=18),
+        Layout(name="analysis", ratio=5),
     )
     layout["upper"].split_row(
-        Layout(name="progress", ratio=2), Layout(name="messages", ratio=3)
+        Layout(name="progress", ratio=2, minimum_size=12),
+        Layout(name="messages", ratio=3),
     )
     return layout
 
@@ -882,7 +886,7 @@ def run_analysis():
                     )
                     message_buffer.update_agent_status("Market Analyst", "completed")
                     # Set next analyst to in_progress
-                    if "social" in selections["analysts"]:
+                    if AnalystType.SOCIAL in selections["analysts"]:
                         message_buffer.update_agent_status(
                             "Social Analyst", "in_progress"
                         )
@@ -893,7 +897,7 @@ def run_analysis():
                     )
                     message_buffer.update_agent_status("Social Analyst", "completed")
                     # Set next analyst to in_progress
-                    if "news" in selections["analysts"]:
+                    if AnalystType.NEWS in selections["analysts"]:
                         message_buffer.update_agent_status(
                             "News Analyst", "in_progress"
                         )
@@ -904,7 +908,7 @@ def run_analysis():
                     )
                     message_buffer.update_agent_status("News Analyst", "completed")
                     # Set next analyst to in_progress
-                    if "fundamentals" in selections["analysts"]:
+                    if AnalystType.FUNDAMENTALS in selections["analysts"]:
                         message_buffer.update_agent_status(
                             "Fundamentals Analyst", "in_progress"
                         )
